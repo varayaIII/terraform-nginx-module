@@ -1,1 +1,20 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  lint-validate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform -chdir=modules/nginx fmt -check
+      - run: terraform -chdir=modules/nginx init -backend=false
+      - run: terraform -chdir=modules/nginx validate
+      - uses: terraform-linters/setup-tflint@v4
+      - run: tflint --init && tflint
+      - uses: terraform-docs/gh-actions@v1
+        with:
+          working-dir: modules/nginx
+          output-file: README.md
+          output-method: replace
+          git-push: "true"
 
