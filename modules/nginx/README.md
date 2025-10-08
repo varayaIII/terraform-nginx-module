@@ -1,7 +1,16 @@
-## Usage
+# Terraform Module: Nginx for Kubernetes
+
+Este módulo despliega un servidor Nginx en un cluster Kubernetes usando Terraform.  
+Crea automáticamente un **Deployment** y un **Service** tipo LoadBalancer.
+
+
 ```hcl
-module "nginx" {
-  source = "git::https://github.com/varayaIII/terraform-nginx-module.git//modules/nginx?ref=v0.1.0"
-  # inputs...
+provider "kubernetes" {
+  config_path = "~/.kube/config"
 }
 
+module "nginx_app" {
+  source    = "github.com/varayaIII/terraform-nginx-module//modules/nginx"
+  app_name  = "nginx-demo"
+  replicas  = 2
+}
