@@ -1,10 +1,9 @@
-module "nginx_app" {
-  # La ruta apunta al módulo local
-  source = "../../../modules/nginx"
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+}
 
-  # Asignamos un nombre
-  app_name = "nginx-test-app"
-  
-  # Se usa solo una réplica para que la prueba sea más rápida
-  replicas = 1 
+module "nginx_app" {
+  source    = "../../modules/nginx"
+  app_name  = "nginx-test-app"
+  replicas  = 1
 }
