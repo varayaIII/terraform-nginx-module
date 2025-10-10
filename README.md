@@ -31,3 +31,66 @@ module "nginx_app" {
 output "service_ip" {
   value = module.nginx_app.service_ip
 }
+
+📦 Requisitos
+
+Terraform >= 1.5.0
+Kubernetes cluster activo
+kubectl configurado
+(Para desarrollo) Go 1.22+ para ejecutar tests
+
+🏗️ Estructura del Proyecto
+.
+├── .github/workflows/     # CI/CD pipelines
+│   ├── ci.yml            # Lint, validación y docs
+│   └── e2e.yml           # Tests end-to-end
+├── modules/nginx/        # Módulo principal
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   └── versions.tf
+├── examples/             # Ejemplos de uso
+│   └── basic_usage/
+└── test/                 # Tests con Terratest
+    └── nginx_test.go
+🧪 Testing
+Ejecutar tests localmente
+bash# Configurar cluster local (KinD)
+kind create cluster
+
+# Ejecutar tests
+cd test
+go test -v -timeout 30m
+CI/CD
+El proyecto incluye dos workflows:
+
+CI: Valida formato, sintaxis, lint y actualiza documentación
+E2E: Ejecuta tests de integración en cada PR/push a main
+
+📚 Documentación del Módulo
+Para documentación detallada del módulo (inputs, outputs, requirements), consulta:
+modules/nginx/README.md
+🤝 Contribuir
+
+Fork el proyecto
+Crea una rama para tu feature (git checkout -b feature/amazing-feature)
+Commit tus cambios (git commit -m 'Add amazing feature')
+Push a la rama (git push origin feature/amazing-feature)
+Abre un Pull Request
+
+Convenciones
+
+Código Terraform debe seguir terraform fmt
+Variables deben estar documentadas
+Tests deben pasar antes de merge
+Los commits deben seguir Conventional Commits
+
+📄 Licencia
+Este proyecto es de código abierto y está disponible bajo la MIT License.
+👤 Autor
+varayalabs
+
+GitHub: @varayaIII
+
+
+⭐️ Si este proyecto te fue útil, considera darle una estrella!
