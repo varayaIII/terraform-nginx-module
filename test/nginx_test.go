@@ -7,7 +7,7 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/k8s"
 	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/stretchr/testify v1.9.0"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNginxModule(t *testing.T) {
