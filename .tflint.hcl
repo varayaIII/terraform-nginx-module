@@ -3,10 +3,6 @@ plugin "terraform" {
   preset  = "recommended"
 }
 
-plugin "kubernetes" {
-  enabled = true
-}
-
 rule "terraform_naming_convention" {
   enabled = true
 }
