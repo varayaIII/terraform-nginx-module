@@ -87,10 +87,4 @@ Los commits deben seguir Conventional Commits
 
 📄 Licencia
 Este proyecto es de código abierto y está disponible bajo la MIT License.
-👤 Autor
-varayalabs
-
-GitHub: @varayaIII
-
-
-⭐️ Si este proyecto te fue útil, considera darle una estrella!
+👤 Autor: varayalabs
