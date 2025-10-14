@@ -16,5 +16,5 @@ jobs:
           working-dir: modules/nginx
           output-file: README.md
           output-method: replace
-          git-push: "true"
+          git-push: "false"
 
