@@ -1,84 +1,43 @@
-# Terraform Module: Nginx for Kubernetes
+<!-- BEGIN_TF_DOCS -->
+## Requirements
 
-Este módulo despliega un servidor Nginx en un cluster Kubernetes usando Terraform.  
-Crea automáticamente un **Deployment** y un **Service** tipo LoadBalancer.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.25 |
 
-## Uso
-```hcl
-provider "kubernetes" {
-  config_path = "~/.kube/config"
-}
+## Providers
 
-module "nginx_app" {
-  source    = "github.com/varayaIII/terraform-nginx-module//modules/nginx"
-  app_name  = "nginx-demo"
-  replicas  = 2
-  namespace = "production"
-}
+| Name | Version |
+|------|---------|
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.38.0 |
 
-output "deployment_name" {
-  value = module.nginx_app.deployment_name
-}
+## Modules
 
-output "service_ip" {
-  value = module.nginx_app.service_ip
-}
+No modules.
 
-Recursos Creados
-Este módulo crea los siguientes recursos en Kubernetes:
+## Resources
 
-Deployment: Despliega los pods de Nginx con las réplicas especificadas
-Service (LoadBalancer): Expone la aplicación externamente
+| Name | Type |
+|------|------|
+| [kubernetes_deployment.nginx](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) | resource |
+| [kubernetes_service.nginx_svc](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) | resource |
 
-Características
+## Inputs
 
-✅ Health checks configurados (liveness y readiness probes)
-✅ Límites de recursos (CPU y memoria)
-✅ Soporte para múltiples réplicas
-✅ Namespace personalizable
-✅ Imagen de Nginx configurable
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_app_image"></a> [app\_image](#input\_app\_image) | La imagen de Docker a utilizar para el contenedor de Nginx. | `string` | `"nginx:1.25.1"` | no |
+| <a name="input_app_name"></a> [app\_name](#input\_app\_name) | El nombre para la aplicación y las etiquetas. | `string` | n/a | yes |
+| <a name="input_container_port"></a> [container\_port](#input\_container\_port) | El puerto que expone el contenedor. | `number` | `80` | no |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | El namespace de Kubernetes donde se desplegará Nginx. | `string` | `"default"` | no |
+| <a name="input_replicas"></a> [replicas](#input\_replicas) | El número de réplicas para el despliegue de Nginx. | `number` | `2` | no |
 
-Requirements
-NameVersionterraform>= 1.5.0kubernetes~> 2.25
-Providers
-NameVersionkubernetes~> 2.25
-Inputs
-NameDescriptionTypeDefaultRequiredapp_nameEl nombre para la aplicación y las etiquetasstringn/ayesnamespaceEl namespace de Kubernetes donde se desplegará Nginxstring"default"noapp_imageLa imagen de Docker a utilizar para el contenedor de Nginxstring"nginx:1.25.1"noreplicasEl número de réplicas para el despliegue de Nginxnumber2nocontainer_portEl puerto que expone el contenedornumber80no
-Outputs
-NameDescriptiondeployment_nameNombre del deployment creadoservice_nameNombre del servicio creadoservice_ipDirección IP externa (LoadBalancer) del servicio
-Ejemplos
-Despliegue básico
-hclmodule "nginx_basic" {
-  source   = "github.com/varayaIII/terraform-nginx-module//modules/nginx"
-  app_name = "nginx-basic"
-}
-Despliegue en producción
-hclmodule "nginx_prod" {
-  source    = "github.com/varayaIII/terraform-nginx-module//modules/nginx"
-  app_name  = "nginx-production"
-  namespace = "production"
-  replicas  = 5
-  app_image = "nginx:1.26.0-alpine"
-}
-Múltiples instancias
-hclmodule "nginx_dev" {
-  source    = "github.com/varayaIII/terraform-nginx-module//modules/nginx"
-  app_name  = "nginx-dev"
-  namespace = "development"
-  replicas  = 1
-}
+## Outputs
 
-module "nginx_staging" {
-  source    = "github.com/varayaIII/terraform-nginx-module//modules/nginx"
-  app_name  = "nginx-staging"
-  namespace = "staging"
-  replicas  = 3
-}
-Notas
-
-El Service LoadBalancer puede tardar unos minutos en obtener una IP externa dependiendo de tu proveedor cloud
-Los health checks están configurados con un delay inicial de 5 segundos
-Los límites de recursos están optimizados para cargas ligeras-medias. Ajusta según tus necesidades
-
-License
-MIT
+| Name | Description |
+|------|-------------|
+| <a name="output_deployment_name"></a> [deployment\_name](#output\_deployment\_name) | Nombre del deployment creado |
+| <a name="output_service_ip"></a> [service\_ip](#output\_service\_ip) | Dirección IP externa (LoadBalancer) del servicio |
+| <a name="output_service_name"></a> [service\_name](#output\_service\_name) | Nombre del servicio creado |
+<!-- END_TF_DOCS -->
