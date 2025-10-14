@@ -3,7 +3,7 @@ provider "kubernetes" {
 }
 
 module "nginx_app" {
-  source    = "../../modules/nginx"
-  app_name  = "nginx-test-app"
-  replicas  = 1
+  source   = "../../modules/nginx"
+  app_name = "nginx-test-app"
+  replicas = 1
 }

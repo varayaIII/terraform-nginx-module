@@ -10,7 +10,7 @@ output "service_name" {
 
 output "service_ip" {
   description = "Dirección IP externa (LoadBalancer) del servicio"
-  value       = try(
+  value = try(
     kubernetes_service.nginx_svc.status[0].load_balancer[0].ingress[0].ip,
     kubernetes_service.nginx_svc.status[0].load_balancer[0].ingress[0].hostname,
     "pending"
