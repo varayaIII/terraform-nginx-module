@@ -8,34 +8,32 @@ on:
 jobs:
   lint-validate-docs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      # Clonar el repositorio
       - uses: actions/checkout@v4
 
-      # Instalar Terraform
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
 
-      # Verificar formato del módulo principal
       - name: Terraform FMT
         run: terraform -chdir=modules/nginx fmt -check
 
-      # Inicializar (sin backend) y validar sintaxis
       - name: Terraform INIT & VALIDATE
         run: |
           terraform -chdir=modules/nginx init -backend=false
           terraform -chdir=modules/nginx validate
 
-      # Instalar y ejecutar TFLint
       - name: Terraform Lint
         uses: terraform-linters/setup-tflint@v4
-      - run: |
+
+      - name: Run TFLint
+        run: |
           tflint --init
           tflint --chdir=modules/nginx
 
-      # Generar documentación con terraform-docs
       - name: Generate module documentation
         uses: terraform-docs/gh-actions@v1.0.0
         with:
