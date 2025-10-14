@@ -33,7 +33,7 @@ jobs:
         uses: terraform-linters/setup-tflint@v4
       - run: |
           tflint --init
-          tflint modules/nginx
+          tflint --chdir=modules/nginx
 
       # Generar documentación con terraform-docs
       - name: Generate module documentation
